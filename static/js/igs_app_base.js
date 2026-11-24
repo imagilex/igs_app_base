@@ -4,7 +4,7 @@ let adjust_4_menu_admin = inputs => {
     })
 }
 
-let openPanel = (body, title, close = true, footer = null, idmodal = "modal-panel-message") => {
+let openPanel = (body, title, close = true, footer = null, idmodal = "modal-panel-message", fullScreen = false) => {
     const existingEl = document.getElementById(idmodal);
     if (existingEl) {
         const instance = bootstrap.Modal.getInstance(existingEl);
@@ -31,7 +31,11 @@ let openPanel = (body, title, close = true, footer = null, idmodal = "modal-pane
     let html = template({ title, body, footer, close, idmodal });
     $(`#${idmodal}`).remove();
     $(document.body).append($(html));
-    let modal = new bootstrap.Modal(document.getElementById(idmodal));
+    modal_content = document.getElementById(idmodal);
+    if (fullScreen) {
+        modal_content.querySelector('.modal-dialog').classList.add('modal-fullscreen');
+    }
+    let modal = new bootstrap.Modal(modal_content);
     modal.show();
     return modal;
 };
